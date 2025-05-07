@@ -1,0 +1,39 @@
+{
+    "accounts": [
+      {
+        "id": "100",
+        "name": "João Silva",
+        "balance": 2500.50,
+        "logs": [
+          {
+            "id": "log_001",
+            "type": "deposit",
+            "amount": 1000.00,
+            "description": "Depósito inicial",
+            "timestamp": "2025-04-05T10:00:00Z"
+          },
+          {
+            "id": "log_002",
+            "type": "withdrawal",
+            "amount": 200.00,
+            "description": "Saque no caixa eletrônico",
+            "timestamp": "2025-04-05T14:30:00Z"
+          }
+        ]
+      },
+      {
+        "id": "300",
+        "name": "Maria Oliveira",
+        "balance": 5000.00,
+        "logs": [
+          {
+            "id": "log_003",
+            "type": "transfer_in",
+            "amount": 1500.00,
+            "description": "Transferência recebida de João Silva",
+            "timestamp": "2025-04-06T09:15:00Z"
+          }
+        ]
+      }
+    ]
+  }
