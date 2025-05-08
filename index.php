@@ -42,6 +42,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
     
             case 'deposit': newDeposit($data);
             break;
+
+            case 'withdraw': withdraw($data);
+            break;
+
+            case 'transfer': transfer($data);
+            break;
         }
     }
    

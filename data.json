@@ -2,11 +2,11 @@
     "accounts": [
         {
             "id": "300",
-            "balance": 5000
+            "balance": 15
         },
         {
             "id": "100",
-            "balance": 20
+            "balance": 0
         }
     ]
 }

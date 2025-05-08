@@ -6,7 +6,7 @@ function resetData(){
         "accounts" => [
             [
                 "id" => "300",
-                "balance" => 5000.00
+                "balance" => 0
             ]
         ]
     ];
@@ -52,6 +52,50 @@ function newDeposit($data){
 
 }
 
+function withdraw($data){
+    $account = checkAccount($data['origin']);
+    $jsonData = getData();
+
+    if(!$account){
+        http_response_code(404);
+        echo(0);
+    } else {
+
+        $index = $account['index'];
+        $jsonData['accounts'][$index]['balance'] -= $data['amount'];
+        $msg = [
+            'origin' => $jsonData['accounts'][$index]
+        ];
+
+        saveData($jsonData, $msg);
+    }
+}
+
+function transfer($data){
+
+    $accountOrigin = checkAccount($data['origin']);
+    $accountDestination = checkAccount($data['destination']);
+
+    $jsonData = getData();
+
+    if(!$accountOrigin || !$accountDestination){
+        http_response_code(404);
+        echo(0);
+    } else {
+
+        $originIndex = $accountOrigin['index'];
+        $destinationIndex = $accountDestination['index'];
+
+        $jsonData['accounts'][$originIndex]['balance'] -= $data['amount'];
+        $jsonData['accounts'][$destinationIndex]['balance'] += $data['amount'];
+        $msg = [
+            'origin' => $jsonData['accounts'][$originIndex],
+            'destination' => $jsonData['accounts'][$destinationIndex]
+        ];
+
+        saveData($jsonData, $msg);
+    }
+}
 function saveData($data, $msg)  {
 
     
