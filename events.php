@@ -1,5 +1,7 @@
 <?php 
 require_once 'get_json_data.php';
+
+//Resets the data.json values
 function resetData(){
 
     $data = [
@@ -23,6 +25,7 @@ function resetData(){
     echo "OK";
 }
 
+//Create a new deposit and a new account if it doenst exist
 function newDeposit($data){
 
     $jsonData = getData();
@@ -52,13 +55,13 @@ function newDeposit($data){
 
 }
 
+//Withdraw from the account, and check if the account have suficient funds
 function withdraw($data){
     $account = checkAccount($data['origin']);
     $jsonData = getData();
 
     if(!$account){
-        http_response_code(404);
-        echo(0);
+      returnError();
     } else {
 
         $index = $account['index'];
@@ -67,10 +70,16 @@ function withdraw($data){
             'origin' => $jsonData['accounts'][$index]
         ];
 
+        if($jsonData['accounts'][$index]['balance'] < 0){
+            http_response_code(402);
+            echo 'Insufficient Funds';
+        } else {
         saveData($jsonData, $msg);
     }
 }
+}
 
+//Transfer if the origin account have sufficient funds
 function transfer($data){
 
     $accountOrigin = checkAccount($data['origin']);
@@ -79,8 +88,7 @@ function transfer($data){
     $jsonData = getData();
 
     if(!$accountOrigin || !$accountDestination){
-        http_response_code(404);
-        echo(0);
+       returnError();
     } else {
 
         $originIndex = $accountOrigin['index'];
@@ -93,7 +101,13 @@ function transfer($data){
             'destination' => $jsonData['accounts'][$destinationIndex]
         ];
 
+        
+        if($jsonData['accounts'][$originIndex]['balance'] < 0){
+            http_response_code(402);
+            echo 'Insufficient Funds';
+        } else {
         saveData($jsonData, $msg);
+    }
     }
 }
 function saveData($data, $msg)  {
@@ -111,5 +125,11 @@ function saveData($data, $msg)  {
         http_response_code(201);
         echo json_encode($msg);
     }
+
+}
+
+function returnError(){
+    http_response_code(404);
+    echo(0);
 
 }

@@ -1,8 +1,8 @@
 <?php 
 
 require_once 'get_json_data.php';
-if($_SERVER['REQUEST_METHOD'] === 'GET'){
 
+    //Get the balance of the Account
     function getBalance($account_id){
     $isFound = checkAccount($account_id);
     if($isFound){
@@ -13,4 +13,3 @@ if($_SERVER['REQUEST_METHOD'] === 'GET'){
         echo (0);
         exit;
     }}
-}

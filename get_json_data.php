@@ -5,20 +5,20 @@ function getData(){
 $jsonFile = 'data.json';
 if (!file_exists($jsonFile)) {
     http_response_code(404);
-    echo json_encode(['error' => 'Arquivo de dados não encontrado']);
+    echo json_encode(['error' => 'JSON File not Found']);
     exit;
 }
 
-// Lê o conteúdo do arquivo JSON
+// read JSON File
 $jsonData = file_get_contents($jsonFile);
 
-// Converte o JSON para array associativo
+// Converts JSON to ARRAY
 $data = json_decode($jsonData, true);
 
-// Verifica se a decodificação foi bem-sucedida
+// Check Decode
 if (json_last_error() !== JSON_ERROR_NONE) {
     http_response_code(500);
-    echo json_encode(['error' => 'Erro ao decodificar o JSON']);
+    echo json_encode(['error' => 'Error decoding JSON']);
     exit;
 }
 
@@ -26,6 +26,7 @@ return $data;
 
 }
 
+//Check if the Account Exists, return the data of the account if found or null if not
 function checkAccount($account_id){
 
     $data = getData();
