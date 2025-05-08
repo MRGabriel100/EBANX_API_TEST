@@ -1,6 +1,7 @@
 <?php
 
 require_once 'balance.php';
+require_once 'events.php';
 
 if ($_SERVER['REQUEST_METHOD'] === 'GET') {
 
@@ -30,8 +31,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
     $url = $_GET['url'] ?? 'home';
     $routes = explode('/', $url);
 
-    if($routes[0] === 'reset'){
-        http_response_code(200);
-        echo "OK";
-    };
+    if($url === 'reset'){
+        resetData();
+    } else if ($url === 'event'){
+
+        $data = json_decode(file_get_contents('php://input'), true);
+
+        $type = $data['type'];
+        switch($type){
+    
+            case 'deposit': newDeposit($data);
+            break;
+        }
+    }
+   
+  
 }

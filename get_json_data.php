@@ -25,3 +25,26 @@ if (json_last_error() !== JSON_ERROR_NONE) {
 return $data;
 
 }
+
+function checkAccount($account_id){
+
+    $data = getData();
+
+    $isFound = null;
+    foreach($data['accounts'] as $index => $account){
+
+        if($account_id === $account['id']){
+            $isFound = $account;
+                 
+            return [
+                "index" => $index,
+                "account" => $isFound
+            ];
+        } 
+
+}
+
+return null;
+
+}
+

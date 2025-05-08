@@ -4,20 +4,13 @@ require_once 'get_json_data.php';
 if($_SERVER['REQUEST_METHOD'] === 'GET'){
 
     function getBalance($account_id){
-    $data = getData();
-    $isFound = null;
-    foreach($data['accounts'] as $account){
-
-        if($account_id === $account['id']){
-            $isFound = $account;
-           
-            break;
-        } 
-    } 
+    $isFound = checkAccount($account_id);
     if($isFound){
-
-        echo json_encode(['status' => '200', 'balance' => $isFound['balance']]);
+        http_response_code(200);
+        echo($isFound['account']['balance']);
     } else {
-        echo json_encode(['status' => '404', 'balance' => 0]);
+        http_response_code(404);
+        echo (0);
+        exit;
     }}
 }
